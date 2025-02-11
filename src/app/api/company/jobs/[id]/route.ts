@@ -50,6 +50,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
     return NextResponse.json(updatedJob);
 }
 
+
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
     await prisma.job.delete({
         where: { id: parseInt(params.id) },

@@ -14,11 +14,12 @@ datasource db {
 }
 
 model Company {
-  id          Int    @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   name        String
-  email       String @unique
+  email       String        @unique
   description String
   jobs        Job[]
+  Application Application[]
 }
 
 model Job {
@@ -50,6 +51,8 @@ model Application {
   createdAt DateTime @default(now())
   job       Job      @relation(fields: [jobId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
+  Company   Company? @relation(fields: [companyId], references: [id])
+  companyId Int?
 
   @@unique([jobId, userId]) // Prevent duplicate applications by the same user for the same job
 }
