@@ -15,17 +15,41 @@ datasource db {
 
 model Company {
   id          Int    @id @default(autoincrement())
-  title       String
+  name        String
+  email       String @unique
   description String
-  category    String
-  location    String
-  salary      String
+  jobs        Job[]
+}
+
+model Job {
+  id           Int           @id @default(autoincrement())
+  title        String
+  description  String
+  category     String
+  location     String
+  salary       String
+  companyId    Int
+  company      Company       @relation(fields: [companyId], references: [id])
+  applications Application[]
 }
 
 model User {
-  id              Int    @id @default(autoincrement())
+  id              Int           @id @default(autoincrement())
   name            String
-  email           String @unique
+  email           String        @unique
   resumeLink      String
   coverLetterLink String
+  applications    Application[]
+}
+
+model Application {
+  id        Int      @id @default(autoincrement())
+  jobId     Int
+  userId    Int
+  status    String   @default("Pending")
+  createdAt DateTime @default(now())
+  job       Job      @relation(fields: [jobId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([jobId, userId]) // Prevent duplicate applications by the same user for the same job
 }
