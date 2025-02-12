@@ -6,6 +6,10 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { useParams } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Textarea } from '@/components/ui/textarea'
+import { Input } from '@/components/ui/input'
+import JobDetailsLoadingSkeleton from '../../elements/JobDetailsLoadingSkeleton '
 
 interface Job {
     id: number
@@ -21,6 +25,13 @@ const JobDetailsPage = () => {
     const params = useParams()
     const [job, setJob] = useState<Job | null>(null)
     const [loading, setLoading] = useState(true)
+
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        coverLetter: ''
+    })
 
     useEffect(() => {
         const getJobDetails = async () => {
@@ -41,7 +52,7 @@ const JobDetailsPage = () => {
     }, [params.id])
 
     if (loading) {
-        return <div className="flex justify-center items-center min-h-screen">Loading...</div>
+        return <JobDetailsLoadingSkeleton />
     }
 
     if (!job) {
@@ -77,12 +88,75 @@ const JobDetailsPage = () => {
                     </div>
                 </CardContent>
                 <CardFooter className="flex justify-center items-end pb-6">
-                    <Button
-                        className="w-full mt-64 max-w-md bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg"
-                        onClick={() => {/* Add your apply logic here */ }}
-                    >
-                        Apply Now
-                    </Button>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button className="w-full mt-64 max-w-md bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg">
+                                Apply Now
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[425px]">
+                            <DialogHeader>
+                                <DialogTitle>Apply for {job.title}</DialogTitle>
+                                <DialogDescription>
+                                    Fill out the form below to submit your application
+                                </DialogDescription>
+                            </DialogHeader>
+                            <form className="space-y-4">
+                                <div>
+                                    <Label htmlFor="name">Full Name</Label>
+                                    <Input
+                                        id="name"
+                                        value={formData.name}
+                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                        placeholder="Enter your full name"
+                                        className="mt-1"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <Label htmlFor="email">Email</Label>
+                                    <Input
+                                        id="email"
+                                        type="email"
+                                        value={formData.email}
+                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                        placeholder="Enter your email"
+                                        className="mt-1"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <Label htmlFor="phone">Phone Number</Label>
+                                    <Input
+                                        id="phone"
+                                        type="tel"
+                                        value={formData.phone}
+                                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                        placeholder="Enter your phone number"
+                                        className="mt-1"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <Label htmlFor="coverLetter">Cover Letter</Label>
+                                    <Textarea
+                                        id="coverLetter"
+                                        value={formData.coverLetter}
+                                        onChange={(e) => setFormData({ ...formData, coverLetter: e.target.value })}
+                                        placeholder="Write your cover letter..."
+                                        className="mt-1 h-32"
+                                        required
+                                    />
+                                </div>
+                                <Button
+                                    type="submit"
+                                    className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+                                >
+                                    Submit Application
+                                </Button>
+                            </form>
+                        </DialogContent>
+                    </Dialog>
                 </CardFooter>
             </Card>
         </div>
