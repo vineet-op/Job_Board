@@ -5,6 +5,7 @@ import { useState } from 'react'
 import List from '../elements/list'
 
 interface Job {
+    id: string | Number
     title: string;
     name: string;
     category: string;
@@ -31,11 +32,14 @@ const page = () => {
         getAllJobs()
     }, [])
 
+
     return (
-        <div className='flex flex-col mx-80 gap-2 mt-10'>
+        <div className='flex flex-col mx-44 gap-3 mt-10'>
+            <div className='text-3xl pl-5 font-extrabold text-purple-900'>Available Jobs</div>
             {joblists.map((job, index) => (
                 <List
                     key={index}
+                    id={job.id}
                     title={job.title as string}
                     name={job.name as string}
                     category={job.category as string}

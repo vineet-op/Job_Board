@@ -14,7 +14,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
             );
         }
 
-        const job = await prisma.job.findUnique({
+        const job = await prisma.job.findMany({
             where: { id: jobId },
             select: {
                 id: true,
