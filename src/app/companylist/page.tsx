@@ -22,7 +22,7 @@ const Page = () => {
     const getAllJobs = async () => {
         try {
             setLoading(true)
-            const response = await axios.get('http://localhost:3000/api/candidate')
+            const response = await axios.get('http://localhost:3000/api/company/jobs')
             setAllJobs(response.data)
         } catch (error: any) {
             console.error('Failed to fetch jobs:', error);
