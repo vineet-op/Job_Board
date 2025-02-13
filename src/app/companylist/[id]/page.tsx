@@ -5,23 +5,22 @@ import UserCard from '@/app/elements/UserCard'
 import axios from "axios"
 import { useParams } from 'next/navigation'
 
-const Page = () => {
-
-
-    interface Application {
+interface Application {
+    id: number;
+    jobId: number;
+    userId: number;
+    status: string;
+    createdAt: string;
+    user: {
         id: number;
-        jobId: number;
-        userId: number;
-        status: string;
-        createdAt: string;
-        user: {
-            id: number;
-            name: string;
-            email: string;
-            resumeLink: string;
-            coverLetterLink: string;
-        };
-    }
+        name: string;
+        email: string;
+        resumeLink: string;
+        coverLetterLink: string;
+    };
+}
+
+const Page = () => {
 
     const [loading, setloading] = useState<boolean>(false)
     const [application, setApplication] = useState<Application[]>([]);
@@ -48,6 +47,7 @@ const Page = () => {
     useEffect(() => {
         getAllApplication()
     }, [params.id])
+
 
     return (
         <div className='flex flex-col justify-center items-center gap-2'>

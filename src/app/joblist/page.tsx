@@ -6,7 +6,7 @@ import List from '../elements/list'
 import LoadingSkeleton from '../elements/skeleton'
 
 interface Job {
-    id: string | Number
+    id: string | number
     title: string;
     name: string;
     category: string;

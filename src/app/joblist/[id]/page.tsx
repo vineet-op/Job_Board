@@ -83,10 +83,9 @@ const JobDetailsPage = () => {
                 // You might want to close the dialog here
             }
 
-
-        } catch (error: any) {
-            console.error("Error fetching job details:", error.response.data)
-            if (error.response.status === 400) {
+        } catch (error: unknown) {
+            console.error("Error fetching job details:", error)
+            if (error instanceof Error && 'response' in error && (error as any).response.status === 400) {
                 alert("You have already applied for this job")
             } else {
                 alert("Error submitting application")
@@ -96,9 +95,6 @@ const JobDetailsPage = () => {
             setLoading(false)
         }
     }
-
-
-
 
 
     return (

@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 
 export type JobListProps = {
-    id: string | Number,
+    id: string | number,
     title: string,
     name: string,
     category: string,
