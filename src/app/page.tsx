@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, MoveRight } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const companies = [
   {
@@ -110,33 +111,7 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* Trust Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="pt-12"
-          >
-            <p className="text-sm text-purple-600 mb-4">Trusted by leading companies</p>
-            <div className="flex justify-center items-center gap-8 flex-wrap">
-              {companies.map((company, index) => (
-                <motion.div
-                  key={company.name}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 + 0.8 }}
-                  whileHover={{ scale: 1.05 }}
-                  className="w-24 h-12 flex items-center justify-center"
-                >
-                  <img
-                    src={company.logo}
-                    alt={company.name}
-                    className="max-w-full max-h-full object-contain"
-                  />
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+
         </div>
       </div>
     </div >

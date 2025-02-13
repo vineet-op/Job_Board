@@ -180,7 +180,8 @@ const Page = () => {
                 {filteredJobs.map((job: Job) => (
                     <Link href={`/companylist/${job.id}`}>
                         <div
-                            key={job.id}
+
+                            key={job.companyId}
                             className="bg-white shadow-md rounded-lg p-6 border hover:shadow-xl hover:border-purple-500 transition-all duration-300"
                         >
                             <h2 className="text-xl font-semibold text-purple-800 mb-2">{job.title}</h2>

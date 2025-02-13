@@ -1,7 +1,7 @@
 import Link from "next/link"
 
 type userCardProps = {
-    jobid: number
+    // jobid: number
     id: number
     name: string
     email: string
@@ -11,7 +11,7 @@ type userCardProps = {
 
 
 
-export default function UserCard({ jobid, id, name, email, resumeLink, coverLetterLink }: userCardProps) {
+export default function UserCard({ id, name, email, resumeLink, coverLetterLink }: userCardProps) {
     return (
         <div className="w-screen h-full flex flex-col justify-center items-center py-5   ">
             <div className="bg-gradient-to-r from-purple-400 via-purple-600 to-purple-800 shadow-lg rounded-lg overflow-hidden max-w-4xl w-full mx-auto text-white">
