@@ -7,30 +7,34 @@ const prisma = new PrismaClient();
 // app/api/company/[id]/route.ts
 export async function GET(req: Request, { params }: { params: { id: string } }) {
     try {
-        const companies = await prisma.company.findMany({
-            where: {
-                id: parseInt(params.id)
-            },
-            include: {
-                jobs: {
-                    select: {
-                        id: true, // Added id to reference in applications
-                        title: true,
-                        description: true,
-                        category: true,
-                        location: true,
-                        salary: true,
-                        applications: {
-                            include: {
-                                user: {
-                                    select: {
-                                        id: true,
-                                        name: true,
-                                        email: true,
-                                        resumeLink: true,
-                                        coverLetterLink: true
-                                    }
-                                }
+        const jobId = parseInt(params.id);
+
+        if (isNaN(jobId)) {
+            return NextResponse.json(
+                { error: "Invalid job ID" },
+                { status: 400 }
+            );
+        }
+
+        // Fetch the job along with its applications
+        const job = await prisma.job.findUnique({
+            where: { id: jobId },
+            select: {
+                id: true,
+                title: true,
+                description: true,
+                category: true,
+                location: true,
+                salary: true,
+                applications: {
+                    include: {
+                        user: {
+                            select: {
+                                id: true,
+                                name: true,
+                                email: true,
+                                resumeLink: true,
+                                coverLetterLink: true
                             }
                         }
                     }
@@ -38,23 +42,24 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
             }
         });
 
-        if (!companies.length) {
+        if (!job) {
             return NextResponse.json(
-                { error: 'No jobs found for this company' },
+                { error: "Job not found" },
                 { status: 404 }
             );
         }
 
-        return NextResponse.json(companies);
+        return NextResponse.json(job.applications);
 
     } catch (error) {
-        console.error('Error fetching company data:', error);
+        console.error("Error fetching job applications:", error);
         return NextResponse.json(
-            { error: 'Failed to fetch jobs' },
+            { error: "Failed to fetch applications" },
             { status: 500 }
         );
     }
 }
+
 
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
     const data = await req.json();

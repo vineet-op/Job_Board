@@ -1,5 +1,5 @@
 "use client"
-import React, { use, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { DollarSign, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -7,7 +7,6 @@ import { Label } from '@/components/ui/label'
 import { useParams } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { Textarea } from '@/components/ui/textarea'
 import { Input } from '@/components/ui/input'
 import JobDetailsLoadingSkeleton from '../../elements/JobDetailsLoadingSkeleton '
 
