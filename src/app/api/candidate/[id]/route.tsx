@@ -44,10 +44,10 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
     }
 }
 
-
-export async function POST(request: Request) {
+export async function POST(request: Request, { params }: { params: { id: string } }) {
     try {
-        const { jobId, name, email, resumeLink, coverLetterLink } = await request.json();
+        const { name, email, resumeLink, coverLetterLink } = await request.json();
+        const jobId = parseInt(params.id);
 
         // Check if the job exists
         const job = await prisma.job.findUnique({

@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import axios from 'axios'
 import { DollarSign, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -26,11 +26,12 @@ const JobDetailsPage = () => {
     const [job, setJob] = useState<Job | null>(null)
     const [loading, setLoading] = useState(true)
 
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        phone: '',
-        coverLetter: ''
+        resumeLink: '',
+        coverLetterLink: ''
     })
 
     useEffect(() => {
@@ -59,14 +60,59 @@ const JobDetailsPage = () => {
         return <div className="flex justify-center items-center min-h-screen">Job not found</div>
     }
 
+
+
+
+    const getUserDetails = async () => {
+        try {
+            const response = await axios.post(`http://localhost:3000/api/candidate/${params.id}`, formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+
+            if (response.status === 201) {
+                // Success handling
+                console.log('Application submitted successfully:', response.data)
+                // Reset form
+                setFormData({
+                    name: '',
+                    email: '',
+                    resumeLink: '',
+                    coverLetterLink: ''
+                })
+                // You might want to close the dialog here
+            }
+
+
+        } catch (error: any) {
+            console.error("Error fetching job details:", error.response.data)
+            if (error.response.status === 400) {
+                alert("You have already applied for this job")
+            } else {
+                alert("Error submitting application")
+            }
+        }
+        finally {
+            setLoading(false)
+        }
+    }
+
+
+
+
+
     return (
         <div className="flex justify-center items-center min-h-screen p-6">
             <Card className="w-full max-w-7xl min-h-[80vh]">
                 <CardHeader>
                     <CardTitle className="text-3xl font-bold text-purple-900">{job.title}</CardTitle>
-                    <CardDescription>
+                    <CardDescription className='flex gap-2'>
                         <Label className="bg-purple-300 text-black font-medium p-2 rounded-full">
                             {job.category}
+                        </Label>
+                        <Label className="bg-purple-300 text-black font-medium p-2 rounded-full">
+                            JobID: {job.id}
                         </Label>
                     </CardDescription>
                 </CardHeader>
@@ -76,6 +122,7 @@ const JobDetailsPage = () => {
                             <MapPin size={20} className="mr-2 text-gray-500" />
                             {job.location}
                         </div>
+
                         <div className="flex items-center text-gray-950 justify-end">
                             <DollarSign size={20} className="mr-2 text-green-500" />
                             ${job.salary}
@@ -101,7 +148,7 @@ const JobDetailsPage = () => {
                                     Fill out the form below to submit your application
                                 </DialogDescription>
                             </DialogHeader>
-                            <form className="space-y-4">
+                            <form onSubmit={getUserDetails} className="space-y-4">
                                 <div>
                                     <Label htmlFor="name">Full Name</Label>
                                     <Input
@@ -125,26 +172,27 @@ const JobDetailsPage = () => {
                                         required
                                     />
                                 </div>
+
                                 <div>
-                                    <Label htmlFor="phone">Phone Number</Label>
+                                    <Label htmlFor="Resume Link">Resume Link</Label>
                                     <Input
-                                        id="phone"
-                                        type="tel"
-                                        value={formData.phone}
-                                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                        placeholder="Enter your phone number"
+                                        id="resume"
+                                        type="text"
+                                        value={formData.resumeLink}
+                                        onChange={(e) => setFormData({ ...formData, resumeLink: e.target.value })}
+                                        placeholder="Enter your resume link"
                                         className="mt-1"
                                         required
                                     />
                                 </div>
                                 <div>
                                     <Label htmlFor="coverLetter">Cover Letter</Label>
-                                    <Textarea
+                                    <Input
                                         id="coverLetter"
-                                        value={formData.coverLetter}
-                                        onChange={(e) => setFormData({ ...formData, coverLetter: e.target.value })}
+                                        value={formData.coverLetterLink}
+                                        onChange={(e) => setFormData({ ...formData, coverLetterLink: e.target.value })}
                                         placeholder="Write your cover letter..."
-                                        className="mt-1 h-32"
+                                        className="mt-1"
                                         required
                                     />
                                 </div>
