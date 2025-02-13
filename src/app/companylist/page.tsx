@@ -63,19 +63,25 @@ const Page = () => {
     const handleSubmit = async () => {
 
         if (!formData.title || !formData.description || !formData.category || !formData.location || !formData.salary) {
-            toast("All fields are required!");
+            toast("Error", {
+                description: "All fields are required!"
+            });
             return;
         }
 
         try {
             setLoading(true);
             await axios.post("http://localhost:3000/api/company/jobs", formData);
-            toast("Job posted successfully!");
+            toast("Success", {
+                description: "Job posted successfully!"
+            });
             setIsDialogOpen(false);
             getAllJobs(); // Refresh job list
         } catch (error) {
             console.error("Error creating job:", error);
-            toast("Failed to post job!");
+            toast("Error", {
+                description: "Failed to post job!"
+            });
         } finally {
             setLoading(false);
         }
@@ -178,9 +184,8 @@ const Page = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
                 {filteredJobs.map((job: Job, index) => (
-                    <Link href={`/companylist/${job.id}`}>
+                    <Link key={index || job.title} href={`/companylist/${job.id}`}>
                         <div
-                            key={index || job.title}
                             className="bg-white shadow-md rounded-lg p-6 border hover:shadow-xl hover:border-purple-500 transition-all duration-300"
                         >
                             <h2 className="text-xl font-semibold text-purple-800 mb-2">{job.title}</h2>

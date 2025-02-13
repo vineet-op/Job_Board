@@ -10,6 +10,20 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Input } from '@/components/ui/input'
 import JobDetailsLoadingSkeleton from '../../elements/JobDetailsLoadingSkeleton '
 
+interface Application {
+    id: number;
+    jobId: number;
+    userId: number;
+    status: string;
+    createdAt: string;
+    user: {
+        id: number;
+        name: string;
+        email: string;
+        resumeLink: string;
+        coverLetterLink: string;
+    };
+}
 interface Job {
     id: number
     title: string
@@ -17,8 +31,9 @@ interface Job {
     category: string
     location: string
     salary: string
-    applications: any[]
+    applications: Application[];
 }
+
 
 const JobDetailsPage = () => {
     const params = useParams()

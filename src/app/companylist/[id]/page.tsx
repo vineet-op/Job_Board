@@ -33,16 +33,12 @@ const Page = () => {
             setloading(true)
             const response = await axios.get(`http://localhost:3000/api/company/jobs/${params.id}`)
             setApplication(response.data)
-
         } catch (error) {
-            console.log("error while getAllApplication", error);
-        }
-        finally {
+            console.error("Error while getAllApplication:", error); // Changed to console.error
+        } finally {
             setloading(false)
-            console.log(application);
-
         }
-    }, [params.id])
+    }, [params.id]) // No need to include application in dependencies as it's only used in console.log
 
     useEffect(() => {
         getAllApplication()
