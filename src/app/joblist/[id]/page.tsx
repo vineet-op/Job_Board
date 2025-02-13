@@ -34,13 +34,6 @@ interface Job {
     applications: Application[];
 }
 
-interface ApiError {
-    response?: {
-        status: number;
-        data?: any;
-    };
-    message: string;
-}
 
 const JobDetailsPage = () => {
     const params = useParams()
@@ -105,21 +98,10 @@ const JobDetailsPage = () => {
                 // You might want to close the dialog here
             }
 
-        } catch (error: unknown) {
-            if (
-                error instanceof Error &&
-                typeof error === 'object' &&
-                error !== null &&
-                'response' in error &&
-                (error as ApiError).response?.status === 400
-            ) {
-                alert("You have already applied for this job");
-            } else {
-                alert("Error submitting application");
-            }
+        } catch (error) {
+            alert(error)
         }
     }
-
 
     return (
         <div className="flex justify-center items-center min-h-screen p-6">
