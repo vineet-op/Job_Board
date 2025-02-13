@@ -15,7 +15,7 @@ interface Job {
     location: string;
 }
 
-const page = () => {
+const Page = () => {
 
     const [joblists, setJoblist] = useState<Job[]>([]);
     const [loading, Setloading] = useState<boolean>(false)
@@ -72,4 +72,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

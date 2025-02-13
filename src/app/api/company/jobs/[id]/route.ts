@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 // app/api/company/[id]/route.ts
 export async function GET(req: Request, { params }: { params: { id: string } }) {
     try {
-        const jobId = parseInt(params.id);
+        const jobId = await parseInt(params.id);
 
         if (isNaN(jobId)) {
             return NextResponse.json(

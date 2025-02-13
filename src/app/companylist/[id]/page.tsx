@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import UserCard from '@/app/elements/UserCard'
 import axios from "axios"
 import { useParams } from 'next/navigation'
@@ -28,7 +28,7 @@ const Page = () => {
 
     const params = useParams()
 
-    const getAllApplication = async () => {
+    const getAllApplication = useCallback(async () => {
         try {
             setloading(true)
             const response = await axios.get(`http://localhost:3000/api/company/jobs/${params.id}`)
@@ -42,11 +42,11 @@ const Page = () => {
             console.log(application);
 
         }
-    }
+    }, [params.id])
 
     useEffect(() => {
         getAllApplication()
-    }, [params.id])
+    }, [getAllApplication])
 
 
     return (
@@ -59,7 +59,6 @@ const Page = () => {
                 application.map((app) => (
                     <UserCard
                         key={app.id}
-                        // jobid={app.jobId}
                         id={app.user.id}
                         name={app.user.name}
                         email={app.user.email}
