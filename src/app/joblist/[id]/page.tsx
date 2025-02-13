@@ -34,6 +34,13 @@ interface Job {
     applications: Application[];
 }
 
+interface ApiError {
+    response?: {
+        status: number;
+        data?: any;
+    };
+    message: string;
+}
 
 const JobDetailsPage = () => {
     const params = useParams()
@@ -99,15 +106,17 @@ const JobDetailsPage = () => {
             }
 
         } catch (error: unknown) {
-            console.error("Error fetching job details:", error)
-            if (error instanceof Error && 'response' in error && (error as any).response.status === 400) {
-                alert("You have already applied for this job")
+            if (
+                error instanceof Error &&
+                typeof error === 'object' &&
+                error !== null &&
+                'response' in error &&
+                (error as ApiError).response?.status === 400
+            ) {
+                alert("You have already applied for this job");
             } else {
-                alert("Error submitting application")
+                alert("Error submitting application");
             }
-        }
-        finally {
-            setLoading(false)
         }
     }
 

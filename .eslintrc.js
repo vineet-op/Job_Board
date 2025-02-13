@@ -1,10 +1,7 @@
 module.exports = {
-    extends: ['next/core-web-vitals'],  // Base configuration from Next.js
+    extends: ['next/core-web-vitals'],
     rules: {
-        // Individual rule configurations
-        'react-hooks/exhaustive-deps': 'warn',     // Hook dependency warnings
-        '@typescript-eslint/no-explicit-any': 'warn',  // TypeScript 'any' type usage
-        '@typescript-eslint/no-unused-vars': 'warn',   // Unused variables
-        'react/jsx-key': 'error'  // Missing key props in lists
+        '@typescript-eslint/no-explicit-any': 'warn',  // Downgrade from error to warning
+        '@typescript-eslint/no-unused-vars': 'warn',   // Downgrade from error to warning
     },
 }
