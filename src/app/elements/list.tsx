@@ -5,6 +5,7 @@ import Link from 'next/link'
 
 
 
+
 export type JobListProps = {
     id: string | Number,
     title: string,
@@ -20,7 +21,7 @@ const List = ({ id, title, name, category, description, salary, location }: JobL
         <Link href={`/joblist/${id}`}>
             <div className="bg-neutral-100 shadow-md rounded-lg p-4 mb-2 hover:shadow-lg transition-shadow duration-300 flex flex-col md:flex-row lg:flex-row xl:flex-row cursor-pointer">
                 <div className="flex-shrink-0 mb-2 md:mb-0 md:mr-4 lg:mr-6 xl:mr-8">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2830/2830596.png" className='w-8 h-8' alt="company-logo" />
+
                 </div>
                 <div className="flex-grow">
                     <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-1">

@@ -4,35 +4,51 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 
+// app/api/company/[id]/route.ts
 export async function GET(req: Request, { params }: { params: { id: string } }) {
     try {
-        const jobs = await prisma.company.findMany({
+        const companies = await prisma.company.findMany({
             where: {
                 id: parseInt(params.id)
             },
             include: {
                 jobs: {
                     select: {
+                        id: true, // Added id to reference in applications
                         title: true,
                         description: true,
                         category: true,
                         location: true,
-                        salary: true
+                        salary: true,
+                        applications: {
+                            include: {
+                                user: {
+                                    select: {
+                                        id: true,
+                                        name: true,
+                                        email: true,
+                                        resumeLink: true,
+                                        coverLetterLink: true
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
         });
 
-        if (!jobs.length) {
+        if (!companies.length) {
             return NextResponse.json(
                 { error: 'No jobs found for this company' },
                 { status: 404 }
             );
         }
 
-        return NextResponse.json(jobs);
+        return NextResponse.json(companies);
 
     } catch (error) {
+        console.error('Error fetching company data:', error);
         return NextResponse.json(
             { error: 'Failed to fetch jobs' },
             { status: 500 }
