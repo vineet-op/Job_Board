@@ -1,11 +1,12 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest,
+    context: { params: { id: string } }) {
 
     try {
-        const jobId = parseInt(params.id);
+        const jobId = parseInt(context.params.id);
 
         if (isNaN(jobId)) {
             return NextResponse.json(
