@@ -4,6 +4,8 @@ import React, { useState, useEffect, useCallback } from 'react'
 import ApplicantCard from '@/app/elements/ApplicantCard'
 import axios from "axios"
 import { useParams } from 'next/navigation'
+import skeleton from '../../elements/skeleton'
+import LoadingSkeleton from '../../elements/skeleton'
 
 interface Application {
     id: number;
@@ -54,20 +56,31 @@ const Page = () => {
                     <h1 className="text-2xl font-semibold tracking-tight text-purple-900">Applicant Details</h1>
                     <p className="text-sm text-purple-600">Review candidate information</p>
                 </div>
-
-                <div className=''>
-                    {users?.map((user, index) => (
-                        <ApplicantCard
-                            key={user.id}
-                            id={user.id}
-                            name={user.name}
-                            email={user.email}
-                            coverLetterLink={user.coverLetterLink}
-                            resumeLink={user.resumeLink}
-                            createdAt={application[0]?.applications[index]?.createdAt || ''}
-                        />
-                    ))}
-                </div>
+                {
+                    loading ? (
+                        <div>
+                            <LoadingSkeleton />
+                            <LoadingSkeleton />
+                            <LoadingSkeleton />
+                            <LoadingSkeleton />
+                            <LoadingSkeleton />
+                        </div>
+                    ) : (
+                        <div>
+                            {users?.map((user, index) => (
+                                <ApplicantCard
+                                    key={user.id}
+                                    id={user.id}
+                                    name={user.name}
+                                    email={user.email}
+                                    coverLetterLink={user.coverLetterLink}
+                                    resumeLink={user.resumeLink}
+                                    createdAt={application[0]?.applications[index]?.createdAt || ''}
+                                />
+                            ))}
+                        </div>
+                    )
+                }
             </div>
         </div>
     )
