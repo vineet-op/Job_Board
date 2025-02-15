@@ -10,20 +10,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Input } from '@/components/ui/input'
 import JobDetailsLoadingSkeleton from '../../elements/JobDetailsLoadingSkeleton '
 
-interface Application {
-    id: number;
-    jobId: number;
-    userId: number;
-    status: string;
-    createdAt: string;
-    user: {
-        id: number;
-        name: string;
-        email: string;
-        resumeLink: string;
-        coverLetterLink: string;
-    };
-}
 interface Job {
     id: number
     title: string
@@ -31,15 +17,13 @@ interface Job {
     category: string
     location: string
     salary: string
-    applications: Application[];
+    applications: any[]
 }
-
 
 const JobDetailsPage = () => {
     const params = useParams()
     const [job, setJob] = useState<Job | null>(null)
     const [loading, setLoading] = useState(true)
-
 
     const [formData, setFormData] = useState({
         name: '',
@@ -52,8 +36,9 @@ const JobDetailsPage = () => {
         const getJobDetails = async () => {
             try {
                 const response = await axios.get(`http://localhost:3000/api/candidate/${params.id}`)
-                // Since the API returns an array with one item, we take the first item
-                setJob(response.data[0])
+                // Render the data from the API response
+                const jobData = response.data[0]
+                setJob(jobData)
             } catch (error) {
                 console.error("Error fetching job details:", error)
             } finally {
@@ -64,7 +49,11 @@ const JobDetailsPage = () => {
         if (params.id) {
             getJobDetails()
         }
+
     }, [params.id])
+
+    console.log(job);
+
 
     if (loading) {
         return <JobDetailsLoadingSkeleton />
@@ -74,10 +63,8 @@ const JobDetailsPage = () => {
         return <div className="flex justify-center items-center min-h-screen">Job not found</div>
     }
 
-
-
-
-    const getUserDetails = async () => {
+    const getUserDetails = async (e: React.FormEvent) => {
+        e.preventDefault()
         try {
             const response = await axios.post(`http://localhost:3000/api/candidate/${params.id}`, formData, {
                 headers: {
@@ -98,8 +85,13 @@ const JobDetailsPage = () => {
                 // You might want to close the dialog here
             }
 
-        } catch (error) {
-            alert(error)
+        } catch (error: unknown) {
+            console.error("Error submitting application:", error)
+            if (error instanceof Error && 'response' in error && (error as any).response.status === 400) {
+                alert("You have already applied for this job")
+            } else {
+                alert("Error submitting application")
+            }
         }
     }
 

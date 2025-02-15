@@ -1,75 +1,32 @@
 "use client"
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { MoveRight } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-
-
 export default function Home() {
-
   return (
-
-    <div className="min-h-screen bg-gradient-to-b from-white to-purple-50">
-      {/* Hero Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center">
-        <div className="space-y-8">
-          {/* Main Heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-purple-900"
-          >
-            Your Career Journey
-            <br />
-            Starts Here
-          </motion.h1>
-
-          {/* Subheading */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl md:text-2xl text-purple-700/80 max-w-2xl mx-auto"
-          >
-            Connect with top companies and find your dream job, or hire exceptional talent to grow your team.
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center pt-8"
-          >
-            {/* Get Hired Button */}
-
+    <div className="ml-8 mt-8 mr-8 mb-8 rounded-xl overflow-hidden">
+      <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-screen h-screen">
+        <div className="flex justify-center items-center flex-col gap-10 pt-60">
+          <div className="text-6xl font-extrabold text-black">Find Your Dream <span className="text-white">Job</span> Today</div>
+          <div className="text-xl font-thin text-black">
+            Discover thousands of job opportunities with all the information you need. Your dream job is waiting for you.
+          </div>
+          <div className="flex gap-11 p-5 items-center w-full">
+            {/* Students */}
             <Link href='/joblist'>
-              <Button
-                size="lg"
-                className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-6 text-lg rounded-full 
-              transition-all duration-300 hover:scale-105 flex items-center gap-2 shadow-lg hover:shadow-purple-200"
-              >
-                Get Hired
-                <ArrowRight className="w-5 h-5" />
+              <Button className="px-12 py-6 rounded-full bg-white text-black hover:bg-white hover:cursor-pointer font-medium hover:scale-105 transition-transform duration-300">
+                Get Hired <MoveRight />
               </Button>
             </Link>
-
-            {/* Post Job Button */}
 
             <Link href='/companylist'>
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-2 border-purple-600 text-purple-600 hover:bg-purple-50 px-8 py-6 text-lg 
-              rounded-full transition-all duration-300 hover:scale-105 flex items-center gap-2"
-              >
-                Post a Job
-                <ArrowRight className="w-5 h-5" />
+              <Button className="px-12 py-6 rounded-full bg-black hover:cursor-pointer hover:scale-105 transition-transform duration-300">
+                Post a Job <MoveRight />
               </Button>
             </Link>
-          </motion.div>
+          </div>
 
           {/* Stats Section */}
           <motion.div
@@ -91,10 +48,8 @@ export default function Home() {
               <p className="text-purple-700/70">Job Seekers</p>
             </div>
           </motion.div>
-
-
         </div>
       </div>
-    </div >
+    </div>
   );
 }

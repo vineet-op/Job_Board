@@ -32,7 +32,10 @@ export const POST = async (req: NextRequest) => {
 
 export const GET = async () => {
     try {
-        const allJobs = await prisma.job.findMany({})
+        const allJobs = await prisma.job.findMany({
+
+        })
+
         return NextResponse.json(allJobs)
     } catch (error) {
         console.error('Failed to fetch alljobs:', error);

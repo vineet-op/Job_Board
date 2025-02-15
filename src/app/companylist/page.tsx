@@ -63,25 +63,19 @@ const Page = () => {
     const handleSubmit = async () => {
 
         if (!formData.title || !formData.description || !formData.category || !formData.location || !formData.salary) {
-            toast("Error", {
-                description: "All fields are required!"
-            });
+            toast("All fields are required")
             return;
         }
 
         try {
             setLoading(true);
             await axios.post("http://localhost:3000/api/company/jobs", formData);
-            toast("Success", {
-                description: "Job posted successfully!"
-            });
+            toast("Applied Success")
             setIsDialogOpen(false);
             getAllJobs(); // Refresh job list
         } catch (error) {
             console.error("Error creating job:", error);
-            toast("Error", {
-                description: "Failed to post job!"
-            });
+            toast("Failed to apply for job")
         } finally {
             setLoading(false);
         }
