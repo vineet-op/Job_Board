@@ -23,7 +23,6 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
                 category: true,
                 location: true,
                 salary: true,
-                applications: true
             },
         });
 

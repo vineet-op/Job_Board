@@ -3,23 +3,23 @@ import { prisma } from "@/lib/prisma";
 
 
 // app/api/company/[id]/route.ts
-export async function GET(req: Request, { params }: { params: { id: number } }) {
+export async function GET(req: Request, { params }: { params: { id: string } }) {
     try {
         // Parse the job ID from params (no need to await params.id)
-        const jobId = await params.id;
+        const jobId = await parseInt(params.id);
 
         // Check if the job ID is valid
+        if (isNaN(jobId)) {
+            return NextResponse.json(
+                { error: "Invalid job ID" },
+                { status: 400 }
+            );
+        }
 
         // Fetch the job along with its applications
-        const job = await prisma.job.findUnique({
+        const job = await prisma.job.findMany({
             where: { id: jobId },
             select: {
-                id: true,
-                title: true,
-                description: true,
-                category: true,
-                location: true,
-                salary: true,
                 applications: {
                     include: {
                         user: {
@@ -45,7 +45,7 @@ export async function GET(req: Request, { params }: { params: { id: number } }) 
         }
 
         // Return the applications for the job
-        return NextResponse.json(job.applications);
+        return NextResponse.json(job);
 
     } catch (error) {
         console.error("Error fetching job applications:", error);
