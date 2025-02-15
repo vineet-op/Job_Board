@@ -4,7 +4,6 @@ import React, { useState, useEffect, useCallback } from 'react'
 import ApplicantCard from '@/app/elements/ApplicantCard'
 import axios from "axios"
 import { useParams } from 'next/navigation'
-import skeleton from '../../elements/skeleton'
 import LoadingSkeleton from '../../elements/skeleton'
 
 interface Application {

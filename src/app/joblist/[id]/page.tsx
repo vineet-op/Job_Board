@@ -17,7 +17,7 @@ interface Job {
     category: string
     location: string
     salary: string
-    applications: any[]
+    // applications: any[]
 }
 
 const JobDetailsPage = () => {
@@ -85,13 +85,8 @@ const JobDetailsPage = () => {
                 // You might want to close the dialog here
             }
 
-        } catch (error: unknown) {
-            console.error("Error submitting application:", error)
-            if (error instanceof Error && 'response' in error && (error as any).response.status === 400) {
-                alert("You have already applied for this job")
-            } else {
-                alert("Error submitting application")
-            }
+        } catch (error) {
+            console.error('Error submitting application:', error);
         }
     }
 
