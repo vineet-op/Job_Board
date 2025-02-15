@@ -2,11 +2,10 @@ import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 
-export async function GET(req: NextRequest,
-    context: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
 
     try {
-        const jobId = parseInt(context.params.id);
+        const jobId = parseInt(params.id);
 
         if (isNaN(jobId)) {
             return NextResponse.json(
@@ -14,8 +13,7 @@ export async function GET(req: NextRequest,
                 { status: 400 }
             );
         }
-
-        const job = await prisma.job.findMany({
+        const job = await prisma.job.findUnique({
             where: { id: jobId },
             select: {
                 id: true,
@@ -44,7 +42,7 @@ export async function GET(req: NextRequest,
     }
 }
 
-export async function POST(request: Request, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const { name, email, resumeLink, coverLetterLink } = await request.json();
         const jobId = parseInt(params.id);
