@@ -2,10 +2,9 @@ import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
-        const jobId = parseInt(params.id);
+        const jobId = parseInt((await params).id)
 
         if (isNaN(jobId)) {
             return NextResponse.json(
@@ -13,7 +12,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
                 { status: 400 }
             );
         }
-        const job = await prisma.job.findUnique({
+        const job = await prisma.job.findMany({
             where: { id: jobId },
             select: {
                 id: true,
@@ -24,14 +23,12 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
                 salary: true,
             },
         });
-
         if (!job) {
             return NextResponse.json(
                 { error: "Job not found" },
                 { status: 404 }
             );
         }
-
         return NextResponse.json(job);
     } catch (error) {
         console.error("Error fetching job:", error);
@@ -42,10 +39,11 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     }
 }
 
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
         const { name, email, resumeLink, coverLetterLink } = await request.json();
-        const jobId = parseInt(params.id);
+
+        const jobId = parseInt((await params).id)
 
         // Check if the job exists
         const job = await prisma.job.findUnique({

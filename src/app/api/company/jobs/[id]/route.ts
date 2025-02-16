@@ -1,12 +1,12 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from "@/lib/prisma";
 
 
 // app/api/company/[id]/route.ts
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
-        // Parse the job ID from params (no need to await params.id)
-        const jobId = await parseInt(params.id);
+
+        const jobId = parseInt((await params).id)
 
         // Check if the job ID is valid
         if (isNaN(jobId)) {

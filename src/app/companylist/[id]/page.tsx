@@ -5,6 +5,7 @@ import ApplicantCard from '@/app/elements/ApplicantCard'
 import axios from "axios"
 import { useParams } from 'next/navigation'
 import LoadingSkeleton from '../../elements/skeleton'
+import { empty } from '@prisma/client/runtime/library'
 
 interface Application {
     id: number;
@@ -66,6 +67,13 @@ const Page = () => {
                         </div>
                     ) : (
                         <div>
+                            {
+                                (!users || users.length === 0) && <div className='w-full flex h-full pt-28 justify-center items-center'>
+                                    <div className='text-4xl text-purple-500'>
+                                        No Application recieved yet!
+                                    </div>
+                                </div>
+                            }
                             {users?.map((user, index) => (
                                 <ApplicantCard
                                     key={user.id}

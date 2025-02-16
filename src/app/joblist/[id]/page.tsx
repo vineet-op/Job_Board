@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import JobDetailsLoadingSkeleton from '../../elements/JobDetailsLoadingSkeleton '
+import { toast } from "sonner"
 
 interface Job {
     id: number
@@ -83,6 +84,9 @@ const JobDetailsPage = () => {
                     coverLetterLink: ''
                 })
                 // You might want to close the dialog here
+
+                toast("Applied Succesfully.")
+
             }
 
         } catch (error) {

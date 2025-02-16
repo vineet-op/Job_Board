@@ -70,7 +70,7 @@ const Page = () => {
         try {
             setLoading(true);
             await axios.post("http://localhost:3000/api/company/jobs", formData);
-            toast("Applied Success")
+            toast("Job Posted Successfully")
             setIsDialogOpen(false);
             getAllJobs(); // Refresh job list
         } catch (error) {
