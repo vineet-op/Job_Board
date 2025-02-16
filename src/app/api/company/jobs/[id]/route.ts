@@ -56,21 +56,3 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     }
 }
 
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
-    const data = await req.json();
-    const updatedJob = await prisma.job.update({
-        where: { id: parseInt(params.id) },
-        data,
-    });
-
-    return NextResponse.json(updatedJob);
-}
-
-
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
-    await prisma.job.delete({
-        where: { id: parseInt(params.id) },
-    });
-
-    return NextResponse.json({ message: 'Job deleted successfully' });
-}
