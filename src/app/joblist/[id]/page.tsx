@@ -21,6 +21,10 @@ interface Job {
     // applications: any[]
 }
 
+
+
+const baseURL = process.env.NEXT_PUBLIC_API_URL;
+
 const JobDetailsPage = () => {
     const params = useParams()
     const [job, setJob] = useState<Job | null>(null)
@@ -36,7 +40,7 @@ const JobDetailsPage = () => {
     useEffect(() => {
         const getJobDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/candidate/${params.id}`)
+                const response = await axios.get(`${baseURL}/api/candidate/${params.id}`)
                 // Render the data from the API response
                 const jobData = response.data[0]
                 setJob(jobData)
@@ -67,7 +71,7 @@ const JobDetailsPage = () => {
     const getUserDetails = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
-            const response = await axios.post(`http://localhost:3000/api/candidate/${params.id}`, formData, {
+            const response = await axios.post(`${baseURL}/api/candidate/${params.id}`, formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 }

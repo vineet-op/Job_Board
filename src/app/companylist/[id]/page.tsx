@@ -25,6 +25,8 @@ interface Application {
     }[];
 }
 
+const baseURL = process.env.NEXT_PUBLIC_API_URL;
+
 const Page = () => {
     const [loading, setLoading] = useState<boolean>(false)
     const [application, setApplication] = useState<Application[]>([]);
@@ -34,7 +36,7 @@ const Page = () => {
     const getAllApplication = useCallback(async () => {
         try {
             setLoading(true)
-            const response = await axios.get(`http://localhost:3000/api/company/jobs/${params.id}`)
+            const response = await axios.get(`${baseURL}/api/company/jobs/${params.id}`)
             setApplication(response.data)
         } catch (error) {
             console.error("Error while getAllApplication:", error);

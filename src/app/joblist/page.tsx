@@ -15,6 +15,8 @@ interface Job {
     location: string;
 }
 
+const baseURL = process.env.NEXT_PUBLIC_API_URL;
+
 const Page = () => {
 
     const [joblists, setJoblist] = useState<Job[]>([]);
@@ -23,7 +25,7 @@ const Page = () => {
     const getAllJobs = async () => {
         try {
             Setloading(true)
-            const response = await axios.get("http://localhost:3000/api/company/jobs");
+            const response = await axios.get(`${baseURL}/api/company/jobs`);
             setJoblist(response.data);
             Setloading(false)
         } catch (error) {

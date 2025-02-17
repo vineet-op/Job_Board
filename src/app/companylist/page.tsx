@@ -21,6 +21,9 @@ interface Job {
     companyId: number
 }
 
+const baseURL = process.env.NEXT_PUBLIC_API_URL;
+
+
 const Page = () => {
     const [loading, setLoading] = useState<boolean>(false)
     const [allJobs, setAllJobs] = useState<Job[]>([])
@@ -41,7 +44,7 @@ const Page = () => {
     const getAllJobs = async () => {
         try {
             setLoading(true)
-            const response = await axios.get('http://localhost:3000/api/company/jobs')
+            const response = await axios.get(`${baseURL}/api/company/jobs`)
             setAllJobs(response.data)
         } catch (error) {
             console.error('Failed to fetch jobs:', error);
@@ -69,7 +72,7 @@ const Page = () => {
 
         try {
             setLoading(true);
-            await axios.post("http://localhost:3000/api/company/jobs", formData);
+            await axios.post(`${baseURL}/api/company/jobs`, formData);
             toast("Job Posted Successfully")
             setIsDialogOpen(false);
             getAllJobs(); // Refresh job list
