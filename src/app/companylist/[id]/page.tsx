@@ -36,7 +36,7 @@ const Page = () => {
     const getAllApplication = useCallback(async () => {
         try {
             setLoading(true)
-            const response = await axios.get(`${baseURL}/api/company/jobs/${params.id}`)
+            const response = await axios.get(`${baseURL}/company/jobs/${params.id}`)
             setApplication(response.data)
         } catch (error) {
             console.error("Error while getAllApplication:", error);

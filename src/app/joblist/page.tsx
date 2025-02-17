@@ -25,7 +25,7 @@ const Page = () => {
     const getAllJobs = async () => {
         try {
             Setloading(true)
-            const response = await axios.get(`${baseURL}/api/company/jobs`);
+            const response = await axios.get(`${baseURL}/company/jobs`);
             setJoblist(response.data);
             Setloading(false)
         } catch (error) {

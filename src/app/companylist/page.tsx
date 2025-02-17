@@ -44,7 +44,7 @@ const Page = () => {
     const getAllJobs = async () => {
         try {
             setLoading(true)
-            const response = await axios.get(`${baseURL}/api/company/jobs`)
+            const response = await axios.get(`${baseURL}/company/jobs`)
             setAllJobs(response.data)
         } catch (error) {
             console.error('Failed to fetch jobs:', error);
@@ -72,7 +72,7 @@ const Page = () => {
 
         try {
             setLoading(true);
-            await axios.post(`${baseURL}/api/company/jobs`, formData);
+            await axios.post(`${baseURL}/company/jobs`, formData);
             toast("Job Posted Successfully")
             setIsDialogOpen(false);
             getAllJobs(); // Refresh job list

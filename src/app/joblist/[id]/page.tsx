@@ -40,7 +40,7 @@ const JobDetailsPage = () => {
     useEffect(() => {
         const getJobDetails = async () => {
             try {
-                const response = await axios.get(`${baseURL}/api/candidate/${params.id}`)
+                const response = await axios.get(`${baseURL}/candidate/${params.id}`)
                 // Render the data from the API response
                 const jobData = response.data[0]
                 setJob(jobData)
@@ -71,7 +71,7 @@ const JobDetailsPage = () => {
     const getUserDetails = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
-            const response = await axios.post(`${baseURL}/api/candidate/${params.id}`, formData, {
+            const response = await axios.post(`${baseURL}/candidate/${params.id}`, formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
