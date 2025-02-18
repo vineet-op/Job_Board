@@ -1,7 +1,10 @@
-import { DollarSign, MapPin } from 'lucide-react'
+// import { DollarSign, MapPin } from 'lucide-react'
 import React from 'react'
-import { Label } from "@/components/ui/label"
+// import { Label } from "@/components/ui/label"
 import Link from 'next/link'
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent } from "@/components/ui/card"
+import { MapPin, DollarSign, Building } from "lucide-react"
 
 
 
@@ -19,34 +22,42 @@ export type JobListProps = {
 const List = ({ id, title, name, category, description, salary, location }: JobListProps) => {
     return (
         <Link href={`/joblist/${id}`}>
-            <div className="bg-neutral-100 shadow-md rounded-lg p-4 mb-2 hover:shadow-lg transition-shadow duration-300 flex flex-col md:flex-row lg:flex-row xl:flex-row cursor-pointer">
-                <div className="flex-shrink-0 mb-2 md:mb-0 md:mr-4 lg:mr-6 xl:mr-8">
-
-                </div>
-                <div className="flex-grow">
-                    <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-1">
-                        <div>
-                            <h2 className="text-xl font-semibold text-purple-800 mb-1">{title}</h2>
-                            <p className="text-lg text-purple-600 font-medium mb-1">{name}</p>
+            <Card className="overflow-hidden transition-all hover:shadow-lg hover:bg-purple-50 dark:hover:bg-purple-900/10">
+                <CardContent className="p-6">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div className="space-y-3">
+                            <div>
+                                <h3 className="text-2xl font-bold tracking-tight text-purple-700 dark:text-purple-300">{title}</h3>
+                                <p className="text-lg text-purple-600 dark:text-purple-400">{name}</p>
+                            </div>
+                            <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">{description}</p>
+                            <div className="flex items-center gap-2">
+                                <Badge
+                                    variant="secondary"
+                                    className="bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100"
+                                >
+                                    {category}
+                                </Badge>
+                                <span className="text-sm text-purple-600 dark:text-purple-400">ID: {id}</span>
+                            </div>
                         </div>
-                        <div className="mt-1 md:mt-0">
-                            <Label className='bg-purple-300 text-black font-medium p-2 text-wrap rounded-full'>
-                                {category}
-                            </Label>
+                        <div className="flex flex-col gap-2 md:items-end">
+                            <div className="flex items-center gap-2 text-sm text-purple-700 dark:text-purple-300">
+                                <DollarSign className="w-4 h-4" />
+                                <span>{salary}</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-purple-700 dark:text-purple-300">
+                                <MapPin className="w-4 h-4" />
+                                <span>{location}</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-purple-700 dark:text-purple-300">
+                                <Building className="w-4 h-4" />
+                                <span>{name}</span>
+                            </div>
                         </div>
                     </div>
-                    <p className="text-gray-700 mb-2 line-clamp-1">{description}</p>
-                    <div className="grid grid-cols-2 gap-2 mb-2">
-                        <div className="flex items-center text-gray-700">
-                            <MapPin size={18} className="mr-2 text-gray-500" />
-                            {location}
-                        </div>
-                        <div className="flex items-center justify-end text-gray-950">
-                            <DollarSign size={18} className="mr-2 text-green-500" />${salary}
-                        </div>
-                    </div>
-                </div>
-            </div>
+                </CardContent>
+            </Card>
         </Link>
     )
 }
