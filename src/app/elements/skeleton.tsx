@@ -2,7 +2,8 @@ import { Skeleton } from "@/components/ui/skeleton"; // Import the Skeleton comp
 
 const LoadingSkeleton = () => {
     return (
-        <div className="bg-neutral-100 shadow-md rounded-lg p-4 mb-2 hover:shadow-lg transition-shadow duration-300 flex flex-col md:flex-row lg:flex-row xl:flex-row cursor-pointer">
+        <div className="bg-neutral-100 shadow-md rounded-lg p-4 mb-2 hover:shadow-lg transition-shadow duration-300 flex flex-col md:flex-row lg:flex-row xl:flex-row cursor-pointer mx-auto w-[60rem]">
+
             <div className="flex-shrink-0 mb-2 md:mb-0 md:mr-4 lg:mr-6 xl:mr-8">
                 <Skeleton className="w-8 h-8 rounded-full" /> {/* Company logo skeleton */}
             </div>
